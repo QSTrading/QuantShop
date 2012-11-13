@@ -1,0 +1,3452 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Beetle</name>
+    </assembly>
+    <members>
+        <member name="T:Beetle.Package">
+            <summary>
+            对象协议封装基础类
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.#ctor">
+            <summary>
+            构建对像协议封装
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.#ctor(Beetle.TcpChannel)">
+            <summary>
+            构建对像协议封装
+            </summary>
+            <param name="channel">tcp通讯通道</param>
+        </member>
+        <member name="F:Beetle.Package.ReceiveMessage">
+            <summary>
+            消息接收委托,指定该委托对消息接收进行处理
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.GetPools">
+            <summary>
+            获取Buffer Pool到封装对像中
+            </summary>
+        </member>
+        <member name="F:Beetle.Package.Channel">
+            <summary>
+            获取当前数据分析器对就应的通道
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.MessageWrite(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            控制消息写入方法,重写些方法控制消息写入流的方式
+            </summary>
+            <param name="msg">实现IMessage的消息对象</param>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.Package.MessageWrited(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            消息写入完成事件，可用于一些消息资源回收
+            </summary>
+            <param name="msg">实现IMessage的消息对象</param>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.Package.MessageRead(Beetle.BufferReader)">
+            <summary>
+            根据流反序列化对像,重写此方法从流中加载对像
+            </summary>
+            <param name="reader">数据流读取对像</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="F:Beetle.Package.Writer">
+            <summary>
+            数据流写入对象
+            </summary>
+        </member>
+        <member name="F:Beetle.Package.Reader">
+            <summary>
+            获取读取对象
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.CreateWriterReader">
+            <summary>
+            创建分器包的数据流写入和读取对像
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.MessageToArraySegment(Beetle.IMessage,Beetle.ByteArraySegment)">
+            <summary>
+            根据当前package的处理方式把一个消息写入到一个ByteArraySegment
+            </summary>
+            <param name="msg">IMessage</param>
+            <param name="data">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.Package.ImportReceiveData(System.Object,Beetle.ChannelReceiveEventArgs)">
+            <summary>
+            把数据导入到分析器中
+            </summary>
+            <param name="sender">导入对像</param>
+            <param name="e">导入数据信息</param>
+        </member>
+        <member name="M:Beetle.Package.Import(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            导入数据信息处理,重写此方法进行数据协议分析
+            </summary>
+            <param name="data">接收的byte数组</param>
+            <param name="start">起始索引</param>
+            <param name="count">长度</param>
+        </member>
+        <member name="M:Beetle.Package.ByteIndexOf(System.Byte[],System.Byte[])">
+            <summary>
+            查询一个byte数组在别一个byte数组中的位置,-1表示不存在
+            </summary>
+            <param name="searched">查询数据</param>
+            <param name="find">数据源</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.Package.ByteIndexOf(System.Byte[],System.Byte[],System.Int32)">
+            <summary>
+            查询一个byte数组在别一个byte数组中的位置,-1表示不存在
+            </summary>
+            <param name="searched">查询数据</param>
+            <param name="find">数据源</param>
+            <param name="start">数据源起始位置查询</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.Package.ByteIndexOf(System.Byte[],System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            查询一个byte数组在别一个byte数组中的位置,-1表示不存在
+            </summary>
+            <param name="searched">查询数据</param>
+            <param name="find">数据源</param>
+            <param name="start">数据源起始位置查询</param>
+            <param name="count">查询总长度</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.Package.OnMessageDataReader(Beetle.BufferWriter)">
+            <summary>
+            数据流加载过程,此方法是根据BufferWriter信息构建一个对应的BufferReader并填充对象中
+            </summary>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.Package.OnReceiveMessage(Beetle.PacketRecieveMessagerArgs)">
+            <summary>
+            触发消息接收事件
+            </summary>
+            <param name="e">PacketRecieveMessagerArgs</param>
+        </member>
+        <member name="M:Beetle.Package.OnDisposed">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="M:Beetle.Package.Dispose">
+            <summary>
+            释放当前分析器资源
+            </summary>
+        </member>
+        <member name="P:Beetle.Package.Coding">
+            <summary>
+            或取或设置字符编码
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelDisposedQueue">
+            <summary>
+            通道释放控制队列
+            </summary>
+        </member>
+        <member name="T:Beetle.Task">
+            <summary>
+            循环任务调度器
+            </summary>
+        </member>
+        <member name="M:Beetle.Task.#ctor">
+            <summary>
+            构建任务
+            </summary>
+        </member>
+        <member name="M:Beetle.Task.Pause">
+            <summary>
+            暂停任务
+            </summary>
+        </member>
+        <member name="M:Beetle.Task.Resume">
+            <summary>
+            恢复任务
+            </summary>
+        </member>
+        <member name="M:Beetle.Task.Start(System.Int32,System.Int32)">
+            <summary>
+            启动任务任务
+            </summary>
+            <param name="dueTime">任务执行间隔</param>
+            <param name="period">延时计数时间</param>
+        </member>
+        <member name="M:Beetle.Task.Execute">
+            <summary>
+            任务执行过程，派生类重写
+            </summary>
+        </member>
+        <member name="M:Beetle.Task.Dispose">
+            <summary>
+            释放任务
+            </summary>
+        </member>
+        <member name="P:Beetle.Task.Error">
+            <summary>
+            获取任务处理时发生的异常
+            </summary>
+        </member>
+        <member name="P:Beetle.Task.IsDisposed">
+            <summary>
+            获取当前任务状态是否释放
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelDisposedQueue.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelDisposedQueue.Add(Beetle.ChannelDisposedEventArgs)">
+            <summary>
+            添加释放通道
+            </summary>
+            <param name="channel">ChannelDisposedEventArgs</param>
+        </member>
+        <member name="M:Beetle.ChannelDisposedQueue.Execute">
+            <summary>
+            执行释放操作
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelDisposedQueue.DisposedQueue">
+            <summary>
+            获取单一实例
+            </summary>
+        </member>
+        <member name="T:Beetle.BufferWriter">
+            <summary>
+            数据流写入对像
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferWriter.GetBuffers">
+            <summary>
+            获取所有流信息
+            </summary>
+            <returns>IList'ByteArraySegment</returns>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteHeadSize">
+            <summary>
+            写入一个int32,4个byte,并返回写入所在的buffer位置
+            </summary>
+            <returns>IList'ByteArraySegment</returns>
+        </member>
+        <member name="M:Beetle.BufferWriter.SetHeadSize(System.Int32,System.Collections.Generic.IList{Beetle.ByteArraySegment})">
+            <summary>
+            把一个int32更新到指定buffer的位置，4个byte
+            </summary>
+            <param name="size">int数值</param>
+            <param name="refdata">更新buffer所在位置</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Reset">
+            <summary>
+            重置对像状态
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferWriter.#ctor(System.Text.Encoding)">
+            <summary>
+            构建流写入对像
+            </summary>
+            <param name="coding">字符编码</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.#ctor(System.Text.Encoding,System.Boolean)">
+            <summary>
+            构建流写入对像
+            </summary>
+            <param name="coding">字符编码</param>
+            <param name="bufferfromPool">指定是否从池中获取缓冲区</param>
+        </member>
+        <member name="F:Beetle.BufferWriter.Coding">
+            <summary>
+            获取或设置字符编码
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferWriter.Dispose">
+            <summary>
+            释放写入流对象
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Byte)">
+            <summary>
+            写入一个byte
+            </summary>
+            <param name="value">byte</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(Beetle.ByteArraySegment)">
+            <summary>
+            写入一个ByteArraySegment
+            </summary>
+            <param name="bas">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.DateTime)">
+            <summary>
+            写入一个时间，转成对应的long写入8个byte
+            </summary>
+            <param name="datetime">datetime</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.DateTime[])">
+            <summary>
+            写入一个时间数组，先写入一个数据长度int32(4个byte),然后分别写入每个datetime(8个byte)
+            </summary>
+            <param name="value">DateTime[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.DateTime})">
+            <summary>
+            写入一个时间列表,先写入一个数据长度int32(4个byte),然后分别写入每个datetime(8个byte)
+            </summary>
+            <param name="values">IList'datetime</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Single)">
+            <summary>
+            写入一个float(4byte)
+            </summary>
+            <param name="value">float</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Single[])">
+            <summary>
+            定入一个float数组，先写入一个数组长度int32(4byte),然后分别写入每个fload(4byte)
+            </summary>
+            <param name="value">float[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Single})">
+            <summary>
+            定入一个float列表，先写入一个数组长度int32(4byte),然后分别写入每个fload(4byte)
+            </summary>
+            <param name="values">IList'float</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Boolean)">
+            <summary>
+            写入一个bool(1byte)
+            </summary>
+            <param name="value">bool</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Boolean[])">
+            <summary>
+            写入一个bool数组，先写入数组长度int32(4byte),然后分别写入每个bool(1byte)
+            </summary>
+            <param name="value">bool[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Boolean})">
+            <summary>
+            写入一个bool列表，先写入数组长度int32(4byte),然后分别写入每个bool(1byte)
+            </summary>
+            <param name="values">IList'bool</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Char)">
+            <summary>
+            写入一个char(2byte)
+            </summary>
+            <param name="value">char</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Char[])">
+            <summary>
+            写入一个char数组，先写入数组长度int32(4byte),然后分别写入每个char(2byte)
+            </summary>
+            <param name="value">char[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Char})">
+            <summary>
+            写入一个char列表，先写入数组长度int32(4byte),然后分别写入每个char(2byte)
+            </summary>
+            <param name="values">IList'char</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Double)">
+            <summary>
+            定入一个double(8byte)
+            </summary>
+            <param name="value">double</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Double[])">
+            <summary>
+            写入一个double数组，先写入数组长度int32(4byte),然后分别写入每个double(8byte)
+            </summary>
+            <param name="value">double[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Double})">
+            <summary>
+            写入一个double列表，先写入数组长度int32(4byte),然后分别写入每个double(8byte)
+            </summary>
+            <param name="values">IList'double</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int16)">
+            <summary>
+            写入一个int16(2byte)
+            </summary>
+            <param name="value">int16</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.UInt16)">
+            <summary>
+            写入一个无符号int16
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int16[])">
+            <summary>
+            写入一个int16数组，先写入数组长度int32(4byte),然后分别写入每个int16(2byte)
+            </summary>
+            <param name="value">int16[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Int16})">
+            <summary>
+            写入一个int16列表，先写入数组长度int32(4byte),然后分别写入每个int16(2byte)
+            </summary>
+            <param name="values">IList'int16</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int32)">
+            <summary>
+            定入一个int32(4byte)
+            </summary>
+            <param name="value">int32</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.UInt32)">
+            <summary>
+            写入一个UInt32
+            </summary>
+            <param name="value">UInt32</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int32[])">
+            <summary>
+            写入一个int32数组，先写入数组长度int32(4byte),然后分别写入每个int32(4byte)
+            </summary>
+            <param name="value">int32[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Int32})">
+            <summary>
+            写入一个int32列表，先写入数组长度int32(4byte),然后分别写入每个int32(4byte)
+            </summary>
+            <param name="values">IList'int32</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int64)">
+            <summary>
+            写入一个int64(8byte)
+            </summary>
+            <param name="value">int64</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.UInt64)">
+            <summary>
+            写入一个UInt64
+            </summary>
+            <param name="value">UInt64</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Int64[])">
+            <summary>
+            写入一个int64列表，先写入数组长度int32(4byte),然后分别写入每个int64(8byte)
+            </summary>
+            <param name="value">int64[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.Int64})">
+            <summary>
+            写入一个int64列表，先写入数组长度int32(4byte),然后分别写入每个int64(8byte)
+            </summary>
+            <param name="values">IList'int64</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Byte[])">
+            <summary>
+            写入一个byte数组，先写入数组长度int32(4byte),然后写入byte[]
+            </summary>
+            <param name="value">byte[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.String)">
+            <summary>
+            根据BufferWriter的编码写入一个string,先写入编码byte[]的长度int32(4byte)，然后再写入具体编码的byte[]
+            </summary>
+            <param name="value">string</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.String[])">
+            <summary>
+            写入一个string数组，先写入数组长度int32(4byte),然后分别写入每个string
+            </summary>
+            <param name="value">string[]</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Collections.Generic.IList{System.String})">
+            <summary>
+            写入一个string列表，先写入列表长度int32(4byte),然后分别写入每个string
+            </summary>
+            <param name="values">IList'string</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(Beetle.IMessage)">
+            <summary>
+            写入一个IMessage对象
+            </summary>
+            <param name="obj">IMessage</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            定入一个IMessage对象列表
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+            <param name="objs">IList'T</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            写入一byte[],指定写入的起始位置和长度
+            </summary>
+            <param name="value">byte[]</param>
+            <param name="start">开始位置</param>
+            <param name="length">写入长度</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteReturnSegment(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            写一个byte数据,并返回写入相应buffer的引用
+            </summary>
+            <param name="value">byte[]</param>
+            <param name="start">开始位置</param>
+            <param name="length">写入长度</param>
+            <returns>IList'ByteArraySegment </returns>
+        </member>
+        <member name="F:Beetle.BufferWriter.EnabledVariant">
+            <summary>
+            是否开启Variant方式写入数字，默认是false
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.Int32)">
+            <summary>
+            写入一个int
+            </summary>
+            <param name="value">int</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.UInt32)">
+            <summary>
+            写放一个变长的uint
+            </summary>
+            <param name="value">uint</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.Int64)">
+            <summary>
+            写入一个long
+            </summary>
+            <param name="value">long</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.UInt64)">
+            <summary>
+            写入一个变长的ulong
+            </summary>
+            <param name="value">ulong</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.Double)">
+            <summary>
+            写入一个double
+            </summary>
+            <param name="value">double</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteVariant(System.Single)">
+            <summary>
+            写入一个float
+            </summary>
+            <param name="value">float</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteString(System.String)">
+            <summary>
+            写入一个string不加头长度标识
+            </summary>
+            <param name="value">string</param>
+        </member>
+        <member name="M:Beetle.BufferWriter.WriteShortString(System.String)">
+            <summary>
+            写入一个string并加上一个UINT16的长度标识
+            </summary>
+            <param name="value">string</param>
+        </member>
+        <member name="P:Beetle.BufferWriter.Count">
+            <summary>
+            获取流写入的字节数
+            </summary>
+        </member>
+        <member name="T:Beetle.IpItem">
+            <summary>
+            IP描述类型
+            </summary>
+        </member>
+        <member name="M:Beetle.IpItem.#ctor(System.Net.IPAddress)">
+            <summary>
+            构建指定IP的对象信息
+            </summary>
+            <param name="ip">IPAddress</param>
+        </member>
+        <member name="M:Beetle.IpItem.#ctor(System.Net.IPAddress,System.Net.IPAddress)">
+            <summary>
+            构建指定一段IP的信息
+            </summary>
+            <param name="startip">起始IP</param>
+            <param name="endip">结束IP</param>
+        </member>
+        <member name="M:Beetle.IpItem.#ctor(System.Net.IPAddress,System.Net.IPAddress,System.Boolean)">
+            <summary>
+            构建指定一段IP的信息
+            </summary>
+            <param name="startip">起始IP</param>
+            <param name="endip">结束IP</param>
+            <param name="permit">是否许可接入</param>
+        </member>
+        <member name="M:Beetle.IpItem.Verification(System.Net.IPAddress)">
+            <summary>
+            验证IP
+            </summary>
+            <param name="ip">IP信息</param>
+            <returns>是否有效</returns>
+        </member>
+        <member name="M:Beetle.IpItem.From(System.String,System.Boolean)">
+            <summary>
+            从一个IP描述值中得到一个IP信息描述
+            </summary>
+            <param name="ipaddress">IP信息(127.0.0.1)或(127.0.0.1-127.0.0.10)</param>
+            <param name="permit">是否许可接收</param>
+            <returns>IpItem</returns>
+        </member>
+        <member name="P:Beetle.IpItem.Permit">
+            <summary>
+            获取是否许可接收
+            </summary>
+        </member>
+        <member name="P:Beetle.IpItem.AddressValue">
+            <summary>
+            获取描述的IP信息值(127.0.0.1)或(127.0.0.1-127.0.0.10)
+            </summary>
+        </member>
+        <member name="T:Beetle.MessageHandlerArgs">
+            <summary>
+            消息句柄描述对象
+            </summary>
+        </member>
+        <member name="M:Beetle.MessageHandlerArgs.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="F:Beetle.MessageHandlerArgs.Message">
+            <summary>
+            消息对象
+            </summary>
+        </member>
+        <member name="F:Beetle.MessageHandlerArgs.Cancel">
+            <summary>
+            是否取消控制器转发
+            </summary>
+        </member>
+        <member name="F:Beetle.MessageHandlerArgs.CleanMessage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Beetle.IMessageHandler">
+            <summary>
+            消息处理对象描述,提供给ChannelController使用,方便消息自动转发
+            </summary>
+        </member>
+        <member name="M:Beetle.IMessageHandler.ProcessMessage(Beetle.TcpChannel,Beetle.MessageHandlerArgs)">
+            <summary>
+            消息处理过程
+            </summary>
+            <param name="adapter">tcpchannel</param>
+            <param name="message">消息对象</param>
+        </member>
+        <member name="T:Beetle.ChannelCreatingArgs">
+            <summary>
+            通道创建时事件
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelCreatingArgs.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelCreatingArgs.Socket">
+            <summary>
+            对应的连接对象
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelCreatingArgs.Server">
+            <summary>
+            对应的TCP服务
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelCreatingArgs.Cancel">
+            <summary>
+            是否取消本次连接,默认是False
+            </summary>
+        </member>
+        <member name="T:Beetle.TcpServer">
+            <summary>
+            TCP服务监听对象
+            </summary>
+            <example> 
+            创建一个Tcp服务
+            <code>
+            //实始化组件,分配100个连接缓存,一组buffer和1个接收,发送,消息调度器
+            Beetle.TcpUtils.Setup(100, 1, 1);
+            Beetle.TcpServer server = new Beetle.TcpServer();
+            //创建连接事件
+            server.ChannelConnected += OnConnected;
+            //断开连接事件
+            server.ChannelDisposed += OnDisposed;
+            //监听所有IP的9321端口
+            server.Open(9321);
+            //相关事件
+            private static void OnConnected(object sender, Beetle.ChannelEventArgs e)
+            {
+                C.WriteLine("{0} Connected!", e.Channel.EndPoint);
+                //绑定接收事件
+                e.Channel.DataReceive = OnReceive;
+                //启动接收数据
+                e.Channel.BeginReceive();
+            }
+            private static void OnDisposed(object sender, Beetle.ChannelEventArgs e)
+            {
+                Console.WriteLine("{0} Disposed!", e.Channel.EndPoint);
+            }
+            private static void OnReceive(object sender, Beetle.ChannelReceiveEventArgs e)
+            {
+                //把接收的数据进行解码
+                string value = e.Channel.Coding.GetString(e.Data.Array, e.Data.Offset, e.Data.Count);
+                //输出到控制台
+                Console.WriteLine(value);
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Beetle.TcpServer.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpServer.EnabledVariant">
+            <summary>
+            是否开启Variant方式读取int,int64，默认是false
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpServer.SetFilter``1">
+            <summary>
+            设置IP过虑对象
+            </summary>
+            <typeparam name="T">过虑类型</typeparam>
+        </member>
+        <member name="M:Beetle.TcpServer.GetFilter``1">
+            <summary>
+            获取IP过虑对象
+            </summary>
+            <typeparam name="T">过虑类型</typeparam>
+            <returns>T</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.GetOnlines">
+            <summary>
+            获取在线连接的一份拷贝
+            </summary>
+            <returns>TcpChannel[]</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.GetOnlines(Beetle.ObjectArraySegment{Beetle.TcpChannel})">
+            <summary>
+            获取在线连接
+            </summary>
+            <param name="items">填充的数组</param>
+        </member>
+        <member name="M:Beetle.TcpServer.FindClient(System.Int64,System.String)">
+            <summary>
+            通过ID或名称查找相关连接
+            </summary>
+            <param name="id">id值</param>
+            <param name="name">名称</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.OnConnected(Beetle.TcpChannel)">
+            <summary>
+            触发接入事件
+            </summary>
+            <param name="e">TcpChannel</param>
+        </member>
+        <member name="M:Beetle.TcpServer.OnClientDisposed(System.Object,Beetle.ChannelDisposedEventArgs)">
+            <summary>
+            触发释放事件
+            </summary>
+            <param name="source">触发对象</param>
+            <param name="e">对象信息</param>
+        </member>
+        <member name="M:Beetle.TcpServer.OnChannelCreating(Beetle.ChannelCreatingArgs)">
+            <summary>
+            通道创建事件
+            </summary>
+            <param name="e">ChannelCreatingArgs</param>
+        </member>
+        <member name="M:Beetle.TcpServer.Open(System.Net.IPEndPoint)">
+            <summary>
+            给指定的IP信息启动监听服务
+            </summary>
+            <param name="ipendpoint">IPEndPoint</param>
+        </member>
+        <member name="M:Beetle.TcpServer.Open(System.Net.IPEndPoint,System.Int32)">
+            <summary>
+            给指定的IP和端口启用监听服务
+            </summary>
+            <param name="ipendpoint">ip</param>
+            <param name="listens">队列数</param>
+        </member>
+        <member name="M:Beetle.TcpServer.ReleaseSocket(System.Net.Sockets.Socket)">
+            <summary>
+            释放socket对象
+            </summary>
+            <param name="socket">Socket</param>
+        </member>
+        <member name="M:Beetle.TcpServer.Open(System.Int32)">
+            <summary>
+            给所有IP对应的端口开启服务
+            </summary>
+            <param name="port"></param>
+        </member>
+        <member name="M:Beetle.TcpServer.Open(System.String,System.Int32)">
+            <summary>
+            给指定的IP端口开启服务
+            </summary>
+            <param name="ip">ip描述</param>
+            <param name="port">端口信息</param>
+        </member>
+        <member name="M:Beetle.TcpServer.Open(System.String,System.Int32,System.Int32)">
+            <summary>
+            给指定的IP端口开启服务
+            </summary>
+            <param name="ip">ip描述</param>
+            <param name="port">端口信息</param>
+            <param name="listens">socket接收队列数量 </param>
+        </member>
+        <member name="M:Beetle.TcpServer.SetKeepAliveValues(System.Net.Sockets.Socket,System.UInt32,System.UInt32)">
+            <summary>
+            设置socket的KeepAlive
+            </summary>
+            <param name="socket">socket</param>
+            <param name="first">每一次探测时间</param>
+            <param name="interval">间隔</param>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient(System.String,System.Int32)">
+            <summary>
+            创建指定IP和端口连接
+            </summary>
+            <param name="ip">ip</param>
+            <param name="port">端口</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient(System.Net.IPAddress,System.Int32)">
+            <summary>
+            创建指定IP和端口的连接
+            </summary>
+            <param name="ip">IPAddress</param>
+            <param name="port">int</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient(System.Net.IPEndPoint)">
+            <summary>
+            创建指定IP和端口连接
+            </summary>
+            <param name="endpoint">IP端口信息</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient``1(System.String,System.Int32,Beetle.EventPacketRecievMessage)">
+            <summary>
+            创建指定IP和端口连接
+            </summary>
+            <param name="ip">ip</param>
+            <param name="port">端口</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient``1(System.Net.IPAddress,System.Int32,Beetle.EventPacketRecievMessage)">
+            <summary>
+            创建指定IP和端口的连接
+            </summary>
+            <param name="ip">IPAddress</param>
+            <param name="port">int</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClient``1(System.Net.IPEndPoint,Beetle.EventPacketRecievMessage)">
+            <summary>
+            创建指定IP和端口连接
+            </summary>
+            <param name="endpoint">IP端口信息</param>
+            <returns>TcpChannel</returns>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClientAsync(System.String,System.Int32,System.Action{Beetle.CreateChannelArgs})">
+            <summary>
+            异步创建指定IP和端口的连接
+            </summary>
+            <param name="ip">string</param>
+            <param name="port">int</param>
+            <param name="result">创建回调方法</param>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClientAsync(System.Net.IPAddress,System.Int32,System.Action{Beetle.CreateChannelArgs})">
+            <summary>
+            异步创建指定IP和端口的连接
+            </summary>
+            <param name="ip">IPAddress</param>
+            <param name="port">int</param>
+            <param name="result">创建回调方法</param>
+        </member>
+        <member name="F:Beetle.TcpServer.SocketAsyncEventArgsPools">
+            <summary>
+            提供给创建连接用的可复用SocketAsyncEventArgs
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpServer.CreateClientAsync(System.Net.IPEndPoint,System.Action{Beetle.CreateChannelArgs})">
+            <summary>
+            异步创建指定IP和端口的连接
+            </summary>
+            <param name="endpoint">IPEndPoint</param>
+            <param name="result">创建回调方法</param>
+        </member>
+        <member name="M:Beetle.TcpServer.Pause">
+            <summary>
+            暂停接收连接
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpServer.Resume">
+            <summary>
+            停止接收连接
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpServer.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="E:Beetle.TcpServer.ChannelCreating">
+            <summary>
+            通道创建时事件
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.IsRunning">
+            <summary>
+            获取当前状态是否在运行
+            </summary>
+        </member>
+        <member name="E:Beetle.TcpServer.ChannelConnected">
+            <summary>
+            连接对象事件
+            </summary>
+        </member>
+        <member name="E:Beetle.TcpServer.ChannelDisposed">
+            <summary>
+            连接释放事件
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.DetectHandler">
+            <summary>
+            获取超时检测对象
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.QueueConnects">
+            <summary>
+            获取当前在队列中等待处理的连接数
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.Socket">
+            <summary>
+            获取当前服务的Socket对象
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.Clients">
+            <summary>
+            获取当前服务器的所有在线连接数
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.Coding">
+            <summary>
+            获取或设置服务对应的字符编码
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.Errors">
+            <summary>
+            获取最后一百个错误信息
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpServer.EnabledChannelSendCompeletedEvent">
+            <summary>
+            是否开启通道消息发送完成事件通道
+            </summary>
+        </member>
+        <member name="T:Beetle.MessagePool`1">
+            <summary>
+            可复用消息对象池
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+        </member>
+        <member name="M:Beetle.MessagePool`1.#ctor(System.Int32)">
+            <summary>
+            构建池对象
+            </summary>
+            <param name="count">默认消息数量</param>
+        </member>
+        <member name="M:Beetle.MessagePool`1.Pop">
+            <summary>
+            获取消息
+            </summary>
+            <returns>T</returns>
+        </member>
+        <member name="M:Beetle.MessagePool`1.Push(`0)">
+            <summary>
+            回收消息
+            </summary>
+            <param name="item">T</param>
+        </member>
+        <member name="T:Beetle.IObjectReset">
+            <summary>
+            可复用对象描述接口
+            </summary>
+        </member>
+        <member name="M:Beetle.IObjectReset.Reset">
+            <summary>
+            重置对象信息
+            </summary>
+        </member>
+        <member name="T:Beetle.ICounter">
+            <summary>
+            计数对象
+            </summary>
+        </member>
+        <member name="T:Beetle.IMessage">
+             <summary>
+             消息描述规范接口
+             </summary>
+             <example>扩展一个消息
+             <code>
+                class Register : Beetle.IMessage
+                {
+                    public string Name;
+                    public string EMail;
+                    public void Load(Beetle.BufferReader reader)
+                    {
+                        Name = reader.ReadString();
+                        EMail = reader.ReadString();
+                    }
+            
+                    public void Save(Beetle.BufferWriter writer)
+                    {
+                        writer.Write(Name);
+                        writer.Write(EMail);
+                    }
+                }
+            
+             </code>
+             </example>
+        </member>
+        <member name="M:Beetle.IMessage.Save(Beetle.BufferWriter)">
+            <summary>
+            用于保存消息工作
+            </summary>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.IMessage.Load(Beetle.BufferReader)">
+            <summary>
+            用于信息获取
+            </summary>
+            <param name="reader">流读取对象</param>
+        </member>
+        <member name="M:Beetle.ICounter.SetCount(System.Int32)">
+            <summary>
+            设置对象计数总数
+            </summary>
+            <param name="count">int</param>
+        </member>
+        <member name="M:Beetle.ICounter.Reduce">
+            <summary>
+            递减操作
+            </summary>
+        </member>
+        <member name="P:Beetle.ICounter.Disposed">
+            <summary>
+            计数为零执行的事件
+            </summary>
+        </member>
+        <member name="T:Beetle.Counter">
+            <summary>
+            计数消息基础类
+            </summary>
+        </member>
+        <member name="M:Beetle.Counter.SetCount(System.Int32)">
+            <summary>
+            设置需要发送的数目
+            </summary>
+            <param name="count">int</param>
+        </member>
+        <member name="M:Beetle.Counter.Reduce">
+            <summary>
+            递减操作
+            </summary>
+        </member>
+        <member name="P:Beetle.Counter.Disposed">
+            <summary>
+            计数为零执行的事件
+            </summary>
+        </member>
+        <member name="T:Beetle.ObjectFormatter">
+            <summary>
+            对象序列化和反序列化对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Setup">
+            <summary>
+            初始化内存
+            </summary>
+        </member>
+        <member name="F:Beetle.ObjectFormatter.EncodingStringMaxLength">
+            <summary>
+            属性成员最大字符编码长度,默认是512,可以根据情况进行设置
+            </summary>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Serialize(Beetle.IMessage,Beetle.ByteArraySegment)">
+            <summary>
+            把对象写入到一个内存块中,默认使用UTF8进行字符编码
+            </summary>
+            <param name="message">IMessage</param>
+            <param name="segment">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Serialize(Beetle.IMessage,Beetle.ByteArraySegment,System.Text.Encoding)">
+            <summary>
+            把对象写入到一个内存块中，并指定字符编码集
+            </summary>
+            <param name="message">IMessage</param>
+            <param name="segment">ByteArraySegment</param>
+            <param name="coding">Encoding</param>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Deserialize``1(Beetle.ByteArraySegment)">
+            <summary>
+            从一个内存块中获取一个对象,默认使用UTF8进行字符解码
+            </summary>
+            <typeparam name="T">IMessage</typeparam>
+            <param name="segment">ByteArraySegment</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Deserialize``1(Beetle.ByteArraySegment,System.Text.Encoding)">
+            <summary>
+             从一个内存块中获取一个对象,并指定解码字符集
+            </summary>
+            <typeparam name="T">IMessage</typeparam>
+            <param name="segment">ByteArraySegment</param>
+            <param name="coding">Encoding</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Deserialize(System.Type,Beetle.ByteArraySegment,System.Text.Encoding)">
+            <summary>
+            从一个内存块中获取一个对象,并指定解码字符集
+            </summary>
+            <param name="type">Type</param>
+            <param name="segment">ByteArraySegment</param>
+            <param name="coding">Encoding</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Deserialize(Beetle.IMessage,Beetle.ByteArraySegment)">
+            <summary>
+            把内存块信息加载到对象中,默认使用UTF8进行字符解码
+            </summary>
+            <param name="msg">IMessage</param>
+            <param name="segment">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.ObjectFormatter.Deserialize(Beetle.IMessage,Beetle.ByteArraySegment,System.Text.Encoding)">
+            <summary>
+            把内存块信息加载到对象中,并指定字符解码集
+            </summary>
+            <param name="msg">IMessage</param>
+            <param name="segment">ByteArraySegment</param>
+            <param name="coding">Encoding</param>
+        </member>
+        <member name="T:Beetle.ObjectArraySegment`1">
+            <summary>
+            对象数组段描述类
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Beetle.ObjectArraySegment`1.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ObjectArraySegment`1.#ctor(System.Int32)">
+            <summary>
+            构建对象，并初始化大小的对应数组空间
+            </summary>
+            <param name="count">空间大小</param>
+        </member>
+        <member name="M:Beetle.ObjectArraySegment`1.SetArray(`0[],System.Int32,System.Int32)">
+            <summary>
+            设置段信息
+            </summary>
+            <param name="data">对象数组</param>
+            <param name="offset">偏移量</param>
+            <param name="count">总数</param>
+        </member>
+        <member name="M:Beetle.ObjectArraySegment`1.SetArray(System.Int32,System.Int32)">
+            <summary>
+            设置段信息
+            </summary>
+            <param name="offset">偏移量</param>
+            <param name="count">总数</param>
+        </member>
+        <member name="P:Beetle.ObjectArraySegment`1.Array">
+            <summary>
+            获取对原数组
+            </summary>
+        </member>
+        <member name="P:Beetle.ObjectArraySegment`1.Offset">
+            <summary>
+            可访问偏移索引
+            </summary>
+        </member>
+        <member name="P:Beetle.ObjectArraySegment`1.Count">
+            <summary>
+            可用大小
+            </summary>
+        </member>
+        <member name="T:Beetle.NetTcpException">
+            <summary>
+            beetle组件处理异常
+            </summary>
+        </member>
+        <member name="M:Beetle.NetTcpException.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="M:Beetle.NetTcpException.#ctor(System.String)">
+            <summary>
+            构建指定错误信息的对象
+            </summary>
+            <param name="msg">错误信息</param>
+        </member>
+        <member name="M:Beetle.NetTcpException.#ctor(System.Exception,System.String)">
+            <summary>
+            构建指定错误信息的对象
+            </summary>
+            <param name="innererr">内部异常</param>
+            <param name="msg">错误信息</param>
+        </member>
+        <member name="P:Beetle.NetTcpException.ErrorNumber">
+            <summary>
+            错误号
+            </summary>
+        </member>
+        <member name="T:Beetle.SendMessageCompletedArgs">
+            <summary>
+            发送消息完成事件信息
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelEventArgs">
+            <summary>
+            信道事件信息
+            </summary>
+        </member>
+        <member name="F:Beetle.ChannelEventArgs.Channel">
+            <summary>
+            信道
+            </summary>
+        </member>
+        <member name="F:Beetle.SendMessageCompletedArgs.Success">
+            <summary>
+            消息是否发送成功
+            </summary>
+        </member>
+        <member name="F:Beetle.SendMessageCompletedArgs.Messages">
+            <summary>
+            本次发送完成的消息
+            </summary>
+        </member>
+        <member name="T:Beetle.ByteArraySegment">
+            <summary>
+            byte[]引用对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.#ctor">
+            <summary>
+            构建一个引用byte[]对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Import(Beetle.BufferWriter)">
+            <summary>
+            把BufferWriter的数据倒入到对象中
+            </summary>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.GetData(System.Int32)">
+            <summary>
+            获取相关索引的数据
+            </summary>
+            <param name="index">int</param>
+            <returns>byte</returns>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.#ctor(System.Int32)">
+            <summary>
+            构建一个引用byte[]对象并初始化内部byte,可用于大字符串处理.
+            </summary>
+            <param name="length">初始化长度</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Encoding(System.String,System.Text.Encoding)">
+            <summary>
+            写入string
+            </summary>
+            <param name="value">string</param>
+            <param name="coding">编码</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Import(Beetle.ByteArraySegment)">
+            <summary>
+            导入数据
+            </summary>
+            <param name="e">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Import(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            导入数据
+            </summary>
+            <param name="data">byte[]</param>
+            <param name="offet">int</param>
+            <param name="count">int</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Decoding(System.Text.Encoding)">
+            <summary>
+            获取string
+            </summary>
+            <param name="coding">编码</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Decoding(System.Text.Encoding,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            获取string
+            </summary>
+            <param name="coding">编码</param>
+            <param name="data">byte[]</param>
+            <param name="poffset">int</param>
+            <param name="pcount">int</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.ToBase64String(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            把byte[]转成base64string
+            </summary>
+            <param name="data">data</param>
+            <param name="poffset">poffset</param>
+            <param name="pcount">pcount</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.ToBase64String">
+            <summary>
+            把当前内容转成base64string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.FromBase64String(System.String)">
+            <summary>
+            把一个base64string存放到数据中
+            </summary>
+            <param name="value">string</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.SetInfo(System.Int32,System.Int32)">
+            <summary>
+            设置引用信息
+            </summary>
+            <param name="offset">开始位置</param>
+            <param name="count">长度</param>
+        </member>
+        <member name="F:Beetle.ByteArraySegment.Offset">
+            <summary>
+            起始位置
+            </summary>
+        </member>
+        <member name="F:Beetle.ByteArraySegment.Count">
+            <summary>
+            总长度
+            </summary>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.SetInfo(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            设置引用信息
+            </summary>
+            <param name="data">byte[]</param>
+            <param name="offset">起始位置</param>
+            <param name="count">总长度</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.Clear">
+            <summary>
+            清除资源
+            </summary>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.EncryptTo(Beetle.ByteArraySegment,System.Security.Cryptography.DESCryptoServiceProvider)">
+             <summary>
+             把当前内存块信息进行DES加密，并把加密内容复制到新的内存块中
+             </summary>
+             <param name="segment">ByteArraySegment</param>
+            <param name="mDESProvider">DESCryptoServiceProvider</param>
+        </member>
+        <member name="M:Beetle.ByteArraySegment.DecryptTo(Beetle.ByteArraySegment,System.Security.Cryptography.DESCryptoServiceProvider)">
+             <summary>
+             把当前内存块信息进行DES解密，并把解密内容复制到新的内存块中
+             </summary>
+             <param name="segment">ByteArraySegment</param>
+            <param name="mDESProvider">DESCryptoServiceProvider</param>
+        </member>
+        <member name="P:Beetle.ByteArraySegment.Array">
+            <summary>
+            获取对应的byte[]
+            </summary>
+        </member>
+        <member name="P:Beetle.ByteArraySegment.BufferLength">
+            <summary>
+            获取Buffer长度
+            </summary>
+        </member>
+        <member name="T:Beetle.StringMessage">
+            <summary>
+            处理字符串消息对象
+            </summary>
+        </member>
+        <member name="F:Beetle.StringMessage.Value">
+            <summary>
+            字符串值
+            </summary>
+        </member>
+        <member name="M:Beetle.StringMessage.Save(Beetle.BufferWriter)">
+            <summary>
+            写入流
+            </summary>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.StringMessage.Load(Beetle.BufferReader)">
+            <summary>
+            流读取
+            </summary>
+            <param name="reader">流读取对象</param>
+        </member>
+        <member name="T:Beetle.EventPacketRecievMessage">
+            <summary>
+            协议分析消息接收事件
+            </summary>
+            <param name="e">消息信息</param>
+        </member>
+        <member name="T:Beetle.PacketRecieveMessagerArgs">
+            <summary>
+            协议分析消息接收事件信息对象
+            </summary>
+        </member>
+        <member name="M:Beetle.PacketRecieveMessagerArgs.#ctor(Beetle.TcpChannel,Beetle.IMessage)">
+            <summary>
+            构建对象
+            </summary>
+            <param name="channel">信道</param>
+            <param name="msg">信息对象</param>
+        </member>
+        <member name="F:Beetle.PacketRecieveMessagerArgs.Channel">
+            <summary>
+            信道
+            </summary>
+        </member>
+        <member name="F:Beetle.PacketRecieveMessagerArgs.Message">
+            <summary>
+            信息对象
+            </summary>
+        </member>
+        <member name="T:Beetle.LICENSE">
+            <summary>
+            受权信息
+            </summary>
+        </member>
+        <member name="M:Beetle.LICENSE.ToString">
+            <summary>
+            获取受权信息
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.LICENSE.GetLICENSE">
+            <summary>
+            获取组件当前受权
+            </summary>
+            <returns>LICENSE</returns>
+        </member>
+        <member name="P:Beetle.LICENSE.Company">
+            <summary>
+            公司
+            </summary>
+        </member>
+        <member name="P:Beetle.LICENSE.EMail">
+            <summary>
+            邮件地址
+            </summary>
+        </member>
+        <member name="P:Beetle.LICENSE.ValidDate">
+            <summary>
+            有效日期
+            </summary>
+        </member>
+        <member name="P:Beetle.LICENSE.MaxConnections">
+            <summary>
+            最大连接数
+            </summary>
+        </member>
+        <member name="T:Beetle.TcpChannel">
+            <summary>
+            信道对象,通过包装socket进行一个简单的数据发送和接收处理工作
+            </summary>
+            <example>
+            服务端
+            <code>
+            //实始化组件,分配100个连接缓存,一组buffer和1个接收,发送,消息调度器
+            Beetle.TcpUtils.Setup(100, 1, 1);
+            Beetle.TcpServer server = new Beetle.TcpServer();
+            //创建连接事件
+            server.ChannelConnected += OnConnected;
+            //断开连接事件
+            server.ChannelDisposed += OnDisposed;
+            //监听所有IP的9321端口
+            server.Open(9321);
+            //相关事件
+            private static void OnConnected(object sender, Beetle.ChannelEventArgs e)
+            {
+                C.WriteLine("{0} Connected!", e.Channel.EndPoint);
+                //绑定接收事件
+                e.Channel.DataReceive = OnReceive;
+                //启动接收数据
+                e.Channel.BeginReceive();
+            }
+            private static void OnDisposed(object sender, Beetle.ChannelEventArgs e)
+            {
+                Console.WriteLine("{0} Disposed!", e.Channel.EndPoint);
+            }
+            private static void OnReceive(object sender, Beetle.ChannelReceiveEventArgs e)
+            {
+                //把接收的数据进行解码
+                string value = e.Channel.Coding.GetString(e.Data.Array, e.Data.Offset, e.Data.Count);
+                //输出到控制台
+                Console.WriteLine(value);
+            }
+            </code>
+            客户端
+            <code>
+            Beetle.TcpUtils.Setup(100, 1, 1);
+            channel = Beetle.TcpServer.CreateClient("127.0.0.1", 9321);
+            channel.DataReceive = OnReceive;
+            channel.BeginReceive();
+            Beetle.StringMessage msg = new Beetle.StringMessage();
+            msg.Value = "test";
+            channel.Send(msg);
+            </code>
+            </example>
+        </member>
+        <member name="F:Beetle.TcpChannel.SynSend">
+            <summary>
+            是否同步发送数据
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.CloseStatus">
+            <summary>
+            获取当前关连接的状态信息
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.ReceiveBytes">
+            <summary>
+            获取或设置通道接收到的所有数据
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.SendBytes">
+            <summary>
+            获取或设置通道发送的所有数据
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.EnabledSendCompeletedEvent">
+            <summary>
+            是否开启发送完成事件通道
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.TickCount">
+            <summary>
+            获取通道最近接收数据时间
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpChannel.SetPackage``1">
+            <summary>
+            设置数据分析器
+            </summary>
+            <typeparam name="T">分析器类型</typeparam>
+            <returns>Package</returns>
+        </member>
+        <member name="M:Beetle.TcpChannel.SetPackage``1(Beetle.ChannelController)">
+            <summary>
+            设置数据分析器,并把分析器注册到一个ChannelController中
+            </summary>
+            <typeparam name="T">分析器类型</typeparam>
+            <param name="controller">信道控制器</param>
+            <returns>Package</returns>
+        </member>
+        <member name="F:Beetle.TcpChannel.SendMessageCompleted">
+            <summary>
+            消息发送完成事件
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.DataReceive">
+            <summary>
+            数据接收委托
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.MessageWriting">
+            <summary>
+            写消息委托,指定该值可以自行更改消息写入方式
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpChannel.MessageWrited">
+            <summary>
+            消息写入已经完成委托,跟踪消息写入后的工作
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpChannel.#ctor(System.Net.Sockets.Socket)">
+            <summary>
+            构建信道
+            </summary>
+            <param name="socket">socket通讯对象</param>
+        </member>
+        <member name="F:Beetle.TcpChannel.EnabledVariant">
+            <summary>
+            是否开启Variant方式读取int,int64，默认是false
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpChannel.OnSend(Beetle.IMessage)">
+            <summary>
+            发送信息
+            </summary>
+            <param name="message">信息对象</param>
+        </member>
+        <member name="M:Beetle.TcpChannel.BeginReceive">
+            <summary>
+            启动数据接收
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpChannel.OnDataReceive(Beetle.ChannelReceiveEventArgs)">
+            <summary>
+            触数据接收事件
+            </summary>
+            <param name="e">数据信息</param>
+        </member>
+        <member name="M:Beetle.TcpChannel.CallChannelError(Beetle.ChannelErrorEventArgs)">
+            <summary>
+            触发一个信道错误
+            </summary>
+            <param name="e">错误信息</param>
+        </member>
+        <member name="M:Beetle.TcpChannel.OnChannelError(System.Object)">
+            <summary>
+            触发信道异常事件
+            </summary>
+            <param name="e">错误信息</param>
+        </member>
+        <member name="M:Beetle.TcpChannel.OnChannelDisposed(Beetle.ChannelDisposedEventArgs)">
+            <summary>
+            触发信道释放事件
+            </summary>
+            <param name="e">信道</param>
+        </member>
+        <member name="M:Beetle.TcpChannel.Dispose">
+            <summary>
+            释放信道资源
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Properties">
+            <summary>
+            获了当前Channel属性
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Item(System.String)">
+            <summary>
+            获取或设置信道相关名称的数据信息
+            </summary>
+            <param name="name">名称</param>
+            <returns>object</returns>
+        </member>
+        <member name="P:Beetle.TcpChannel.Status">
+            <summary>
+            获取或设置信道状态类型
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.CreateTime">
+            <summary>
+            通道创建时间
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Tag">
+            <summary>
+            设置信道一个标记对象值
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Package">
+            <summary>
+            获取当前通道的协议分析器
+            </summary>
+        </member>
+        <member name="E:Beetle.TcpChannel.ChannelError">
+            <summary>
+            通道错误事情
+            </summary>
+        </member>
+        <member name="E:Beetle.TcpChannel.ChannelDisposed">
+            <summary>
+            通道释放事件
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Socket">
+            <summary>
+            获取信道内部的Socket对象
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Coding">
+            <summary>
+            获取或设置字符编码
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.ClientID">
+            <summary>
+            获取信道的ID
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Server">
+            <summary>
+            获取信道所在的TcpServer
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.EndPoint">
+            <summary>
+            获取信道IP信息
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.Name">
+            <summary>
+            获取或设置信道名称
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpChannel.IsDisposed">
+            <summary>
+            获取不前通道是否已经释放
+            </summary>
+        </member>
+        <member name="T:Beetle.ObjectPool`1">
+            <summary>
+            对象池
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+        </member>
+        <member name="F:Beetle.ObjectPool`1.mObjects">
+            <summary>
+            数据存储容器
+            </summary>
+        </member>
+        <member name="M:Beetle.ObjectPool`1.#ctor(System.Int32)">
+            <summary>
+            构建池
+            </summary>
+            <param name="counts">池中对象数量</param>
+        </member>
+        <member name="M:Beetle.ObjectPool`1.Pop">
+            <summary>
+            获取对象
+            </summary>
+            <returns>T</returns>
+        </member>
+        <member name="M:Beetle.ObjectPool`1.Push(`0)">
+            <summary>
+            回收对象
+            </summary>
+            <param name="obj">T</param>
+        </member>
+        <member name="M:Beetle.ObjectPool`1.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:Beetle.IByteConverter">
+             <summary>
+             byte转换器,对基础类型byte之间转换的实现
+             </summary>
+             <example>
+             实现一个转换器
+             <code>
+                class ByteConverter : IByteConverter
+                {
+            
+                    private byte[] m1byteData = new byte[1];
+                    private byte[] m2byteData = new byte[2];
+                    private byte[] m4byteData = new byte[4];
+                    private byte[] m8byteData = new byte[8];
+                    public unsafe byte[] GetBytes(char value)
+                    {
+                        return GetBytes((short)value);
+                    }
+                    public unsafe byte[] GetBytes(short value)
+                    {
+                        fixed (byte* ptr = m2byteData)
+                        {
+                            *(short*)ptr = value;
+                        }
+                        return m2byteData;
+                    }
+                    public unsafe byte[] GetBytes(int value)
+                    {
+                        fixed (byte* ptr = m4byteData)
+                        {
+                            *(int*)ptr = value;
+                        }
+                        return m4byteData;
+                    }
+                    public unsafe byte[] GetBytes(long value)
+                    {
+                        fixed (byte* ptr = m8byteData)
+                        {
+                            *(long*)ptr = value;
+                        }
+                        return m8byteData;
+                    }
+                    public unsafe byte[] GetBytes(float value)
+                    {
+                        return GetBytes(*(int*)(&amp;value));
+                    }
+                    public unsafe byte[] GetBytes(double value)
+                    {
+                        return GetBytes(*(long*)(&amp;value));
+                    }
+                    public byte[] GetBytes(byte value)
+                    {
+                        m1byteData[0] = value;
+                        return m1byteData;
+            
+                    }
+                    public byte[] GetBytes(bool value)
+                    {
+                        if (value)
+                            m1byteData[0] = 1;
+                        else
+                            m1byteData[0] = 0;
+                        return m1byteData;
+                    }
+                    private ByteArraySegment mBAS;
+                    public char ReadChar(BufferReader reader)
+                    {
+                        mBAS = reader.Read(2);
+                        return BitConverter.ToChar(mBAS.Array, mBAS.Offset);
+                    }
+                    public short ReadInt16(BufferReader reader)
+                    {
+                        mBAS = reader.Read(2);
+                        return BitConverter.ToInt16(mBAS.Array, mBAS.Offset);
+                    }
+                    public int ReadInt32(BufferReader reader)
+                    {
+                        mBAS = reader.Read(4);
+                        return BitConverter.ToInt32(mBAS.Array, mBAS.Offset);
+                    }
+                    public long ReadInt64(BufferReader reader)
+                    {
+                        mBAS = reader.Read(8);
+                        return BitConverter.ToInt64(mBAS.Array, mBAS.Offset);
+                    }
+                    public float ReadFloat(BufferReader reader)
+                    {
+                        mBAS = reader.Read(4);
+                        return BitConverter.ToSingle(mBAS.Array, mBAS.Offset);
+                    }
+                    public double ReadDouble(BufferReader reader)
+                    {
+                        mBAS = reader.Read(8);
+                        return BitConverter.ToDouble(mBAS.Array, mBAS.Offset);
+                    }
+                    public byte ReadByte(BufferReader reader)
+                    {
+                        mBAS = reader.Read(1);
+                        return mBAS.Array[mBAS.Offset];
+                    }
+                    public bool ReadBool(BufferReader reader)
+                    {
+                        mBAS = reader.Read(1);
+                        return BitConverter.ToBoolean(mBAS.Array, mBAS.Offset);
+                    }
+                }
+             </code>
+             </example>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Char)">
+            <summary>
+            获取一个char的byte[]
+            </summary>
+            <param name="value">char</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Int16)">
+            <summary>
+            获取一个int16的byte[]
+            </summary>
+            <param name="value">int16</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Int32)">
+            <summary>
+            获取到一个int32的byte[]
+            </summary>
+            <param name="value">int32</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Int64)">
+            <summary>
+            获取一个int64的byte[]
+            </summary>
+            <param name="value">int64</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Single)">
+            <summary>
+            获取一个float的byte[]
+            </summary>
+            <param name="value">float</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Double)">
+            <summary>
+            获取一个double的byte[]
+            </summary>
+            <param name="value">double</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Byte)">
+            <summary>
+            获取一个byte的byte[]
+            </summary>
+            <param name="value">byte</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.Boolean)">
+            <summary>
+            获取一个bool的byte[]
+            </summary>
+            <param name="value">bool</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.UInt16)">
+            <summary>
+            获取一个UInt16的数据
+            </summary>
+            <param name="value">UInt16</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.UInt32)">
+            <summary>
+            获取一个UInt32的数据
+            </summary>
+            <param name="value">UInt32</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.GetBytes(System.UInt64)">
+            <summary>
+            获取一个UInt64的数据
+            </summary>
+            <param name="value">UInt64</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadChar(Beetle.BufferReader)">
+            <summary>
+            从流中获取char
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>char</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadInt16(Beetle.BufferReader)">
+            <summary>
+            从流中获取int16
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>short</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadInt32(Beetle.BufferReader)">
+            <summary>
+            从流中获取int32
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadInt64(Beetle.BufferReader)">
+            <summary>
+            从流中获取int64
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>long</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadFloat(Beetle.BufferReader)">
+            <summary>
+            从流中获取float
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>float</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadDouble(Beetle.BufferReader)">
+            <summary>
+            从流中获取double
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>double</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadByte(Beetle.BufferReader)">
+            <summary>
+            从流中获取byte
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>byte</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadBool(Beetle.BufferReader)">
+            <summary>
+            从流中获取bool
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadUInt16(Beetle.BufferReader)">
+            <summary>
+            从一个流中获取一个UInt16
+            </summary>
+            <param name="reader">BufferReader</param>
+            <returns>UInt16</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadUInt32(Beetle.BufferReader)">
+            <summary>
+            从一个流中获取一下UInt32
+            </summary>
+            <param name="reader">BufferReader</param>
+            <returns>UInt32</returns>
+        </member>
+        <member name="M:Beetle.IByteConverter.ReadUInt64(Beetle.BufferReader)">
+            <summary>
+            从一个流中获取一个UInt64
+            </summary>
+            <param name="reader">BufferReader</param>
+            <returns>UInt64</returns>
+        </member>
+        <member name="T:Beetle.EventMessageWriter">
+            <summary>
+            消息写入流事件定义
+            </summary>
+            <param name="msg">消息对象</param>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="T:Beetle.BytesMessage">
+            <summary>
+            包装byte[]发送的消息
+            </summary>
+        </member>
+        <member name="F:Beetle.BytesMessage.Value">
+            <summary>
+            byte[]数据
+            </summary>
+        </member>
+        <member name="M:Beetle.BytesMessage.Save(Beetle.BufferWriter)">
+            <summary>
+            保存数据到流中
+            </summary>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.BytesMessage.Load(Beetle.BufferReader)">
+            <summary>
+            从流中获取数据
+            </summary>
+            <param name="reader">流读取对象</param>
+        </member>
+        <member name="T:Beetle.BufferReader">
+            <summary>
+            数据流读取对象
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferReader.ToBytes">
+            <summary>
+            获取流中所有数据
+            </summary>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.#ctor">
+            <summary>
+            构建一个默认信息的BufferReader,具体信息可以通过Import方法导入
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferReader.#ctor(System.Text.Encoding)">
+            <summary>
+            构建流读取对象
+            </summary>
+            <param name="coding">字符编码</param>
+        </member>
+        <member name="M:Beetle.BufferReader.Import(Beetle.BufferWriter)">
+            <summary>
+            从BufferWriter中导入数据
+            </summary>
+            <param name="write">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.BufferReader.Import(Beetle.ByteArraySegment)">
+            <summary>
+            导入数据
+            </summary>
+            <param name="segment">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.BufferReader.CleanBuffer">
+            <summary>
+            清除BufferReader的内容
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferReader.#ctor(System.Text.Encoding,Beetle.BufferWriter)">
+            <summary>
+            构建流读取对象
+            </summary>
+            <param name="coding">字符编码</param>
+            <param name="write">流写入对象</param>
+        </member>
+        <member name="F:Beetle.BufferReader.Coding">
+            <summary>
+            获取或设置流编码
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadBytes(System.Int32)">
+            <summary>
+            获取指定长度的数据
+            </summary>
+            <param name="count">长度</param>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadByteArray(Beetle.ByteArraySegment)">
+            <summary>
+            获取byte[]到指定的ByteArraySegment中
+            </summary>
+            <param name="bas">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadByteArray">
+            <summary>
+            获取当前流的一个byte数组
+            </summary>
+            <returns>byte[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.Read(System.Int32,Beetle.ByteArraySegment)">
+            <summary>
+            获取指定数据量的byte填充到一个ByteArraySegment中
+            </summary>
+            <param name="count">数量</param>
+            <param name="bas">ByteArraySegment</param>
+        </member>
+        <member name="M:Beetle.BufferReader.Read(System.Int32)">
+            <summary>
+            读取流中指定长度信息的引用
+            </summary>
+            <param name="count">长度</param>
+            <returns>ByteArraySegment</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadByte">
+            <summary>
+            读取一个byte
+            </summary>
+            <returns>byte</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadBool">
+            <summary>
+            读取一个bool
+            </summary>
+            <returns>bool</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadBools">
+            <summary>
+            读取一个bool数组
+            </summary>
+            <returns>bool[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadBoolList">
+            <summary>
+            读取一个bool列表
+            </summary>
+            <returns>IList'bool</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadChar">
+            <summary>
+            读取一个char
+            </summary>
+            <returns>char</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadChars">
+            <summary>
+            读取一个char数组
+            </summary>
+            <returns>char[] </returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadCharList">
+            <summary>
+            读取一个char列表
+            </summary>
+            <returns>IList'char</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDouble">
+            <summary>
+            读取一个double
+            </summary>
+            <returns>double</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDoubles">
+            <summary>
+            读取一个double数组
+            </summary>
+            <returns>double[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDoubleList">
+            <summary>
+            读取一个double列表
+            </summary>
+            <returns>IList'double</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt16">
+            <summary>
+            读取一个int16
+            </summary>
+            <returns>Int16</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadUInt16">
+            <summary>
+            获取一个UInt16
+            </summary>
+            <returns>UInt16</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt16s">
+            <summary>
+            读取一个int16数组
+            </summary>
+            <returns>Int16[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt16List">
+            <summary>
+            读取一个int16列表
+            </summary>
+            <returns>IList'Int16</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadUInt32">
+            <summary>
+            读取一个UInt32
+            </summary>
+            <returns>UInt32</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt32">
+            <summary>
+            读取一个int32
+            </summary>
+            <returns>Int32</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt32s">
+            <summary>
+            读取一个int32数组
+            </summary>
+            <returns>Int32[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt32List">
+            <summary>
+            读取一个int32列表
+            </summary>
+            <returns>IList'Int32</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadUInt64">
+            <summary>
+            获取一个UInt64
+            </summary>
+            <returns>UInt64</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt64">
+            <summary>
+            获取一个int64
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt64s">
+            <summary>
+            获取一个int64数组
+            </summary>
+            <returns>Int64[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadInt64List">
+            <summary>
+            获取一个int64列表
+            </summary>
+            <returns>IList'Int64</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadFloat">
+            <summary>
+            获取一个float
+            </summary>
+            <returns>float</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadFloats">
+            <summary>
+            获取一个float数组
+            </summary>
+            <returns>float[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadFloatList">
+            <summary>
+            获取一个float列表
+            </summary>
+            <returns>IList'float</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDate">
+            <summary>
+            获取一个datetime
+            </summary>
+            <returns>datetime</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDates">
+            <summary>
+            获取一个datetime数组
+            </summary>
+            <returns>datetime[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDateTimeList">
+            <summary>
+            获取一个时间列表
+            </summary>
+            <returns>IList'DateTime</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadString">
+            <summary>
+            获取一个字符串
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadShortString">
+            <summary>
+            获取一个以uint16头标记长度的string
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadStrings">
+            <summary>
+            获取一个字符串数组
+            </summary>
+            <returns>string[]</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadStringList">
+            <summary>
+            获取一个字符串列表
+            </summary>
+            <returns>IList'string</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadObject``1(Beetle.MessagePool{``0})">
+            <summary>
+            获取一个消息对象
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+            <param name="pool">消息池</param>
+            <returns>消息对象</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadObject``1">
+            <summary>
+            获取一个消息对象
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+            <returns>消息对象</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadObjects``1(Beetle.MessagePool{``0})">
+            <summary>
+            获取一个对象列表
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <param name="pool">对应的对象池</param>
+            <returns>IList'T</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadObjects``1">
+            <summary>
+            获取一个对象列表
+            </summary>
+            <typeparam name="T">对象类型</typeparam>
+            <returns>IList'T</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadString(System.Int32)">
+            <summary>
+            获取指定长度的string
+            </summary>
+            <param name="count">长度</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.Dispose">
+            <summary>
+            释放对象资源
+            </summary>
+        </member>
+        <member name="F:Beetle.BufferReader.EnabledVariant">
+            <summary>
+            是否开启Variant方式读取int,int64，默认是false
+            </summary>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadFloatVariant">
+            <summary>
+            读取一个Variant编码的float
+            </summary>
+            <returns>float</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadDoubleVariant">
+            <summary>
+            读取一个Variant编码的double
+            </summary>
+            <returns>double</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.Read32Variant">
+            <summary>
+            读取一个Variant编码的int
+            </summary>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadU32Variant">
+            <summary>
+            获取Variant编码的uint32
+            </summary>
+            <returns>uint</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.Read64Variant">
+            <summary>
+            读取一个Variant编码的long
+            </summary>
+            <returns>long</returns>
+        </member>
+        <member name="M:Beetle.BufferReader.ReadU64Variant">
+            <summary>
+            获取Variant编码的uint64
+            </summary>
+            <returns>ulong</returns>
+        </member>
+        <member name="P:Beetle.BufferReader.Count">
+            <summary>
+            获取流总长度
+            </summary>
+        </member>
+        <member name="T:Beetle.DetectTimeoutHandler">
+            <summary>
+            检测TcpServer一段时间没有请求的连接并释放资源,通过TcpUtils.TimeOutms设置超时时间
+            </summary>
+        </member>
+        <member name="M:Beetle.DetectTimeoutHandler.Execute">
+            <summary>
+            执行处理
+            </summary>
+        </member>
+        <member name="P:Beetle.DetectTimeoutHandler.Server">
+            <summary>
+            获取对应的TcpServer对象
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelReceiveEventArgs">
+            <summary>
+            数据接收事件信息
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelReceiveEventArgs.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelReceiveEventArgs.Data">
+            <summary>
+            接收数据描述
+            </summary>
+        </member>
+        <member name="T:Beetle.Caching.CacheManager">
+            <summary>
+            缓存管理类
+            </summary>
+        </member>
+        <member name="M:Beetle.Caching.CacheManager.#ctor">
+            <summary>
+            构建缓存管理类，每隔60秒对缓存对象进行一个过期扫描
+            </summary>
+        </member>
+        <member name="M:Beetle.Caching.CacheManager.#ctor(System.Int32)">
+            <summary>
+            构建缓存管理类，每隔指定时间对缓存对象进行一个过期扫描
+            </summary>
+            <param name="eacheExpiredtime">间隔秒数</param>
+        </member>
+        <member name="M:Beetle.Caching.CacheManager.Remove(System.String,System.String)">
+            <summary>
+            移除指定组下的缓存对象
+            </summary>
+            <param name="group">组名称</param>
+            <param name="key">键值</param>
+        </member>
+        <member name="M:Beetle.Caching.CacheManager.Set(System.String,System.String,System.Object,System.DateTime)">
+            <summary>
+            缓存对象到指定的分组中
+            </summary>
+            <param name="group">组名称</param>
+            <param name="key">键值</param>
+            <param name="data">缓存的数据</param>
+            <param name="expired">失效时间</param>
+        </member>
+        <member name="M:Beetle.Caching.CacheManager.Get(System.String,System.String)">
+            <summary>
+            从指写的组中获取缓存对象
+            </summary>
+            <param name="group">组名称</param>
+            <param name="key">键值</param>
+            <returns>缓存对象</returns>
+        </member>
+        <member name="T:Beetle.HeadSizeOfPackage">
+             <summary>
+             基于消息头描述长度分析器
+             消息写入的时候会先写入消息总长度(int32),消息类型名称长度(int32),消息类型名称(string)
+             可以通过重写MessageWrite和MessageRead来自定义自己需要的规则.
+             </summary>
+             <example>
+             派生出一个分析器
+            <code>
+                class HeadSizePackage:Beetle.HeadSizeOfPackage
+                {
+                    public HeadSizePackage(Beetle.TcpChannel channel) : base(channel) { }
+                    //重写文件根据名称回对应的对象
+                    protected override Beetle.IMessage GetMessage(string name)
+                    {
+                        switch (name)
+                        {
+                            case "Register":
+                                return new Register();
+                            default:
+                                return null;
+                        }
+                    }
+            
+                }
+             </code>
+             服务端使用,在连接接入的时候进行设置
+             <code>
+                    
+                    static void OnConnected(object sender, Beetle.ChannelEventArgs e)
+                    {
+                        e.Channel.SetPackage&lt;HeadSizePackage&gt;().ReceiveMessage = OnReceive;
+                        e.Channel.ChannelError += OnError;
+                        e.Channel.BeginReceive();
+                    }
+                     
+             </code>
+             客户端使用,在创建连接的时候设置
+             <code>
+             
+                    channel = Beetle.TcpServer.CreateClient("127.0.0.1", 9450);
+                    channel.SetPackage&lt;HeadSizePackage&gt;().ReceiveMessage = OnReceive;
+                    channel.BeginReceive();
+              
+             </code>
+             </example>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.#ctor">
+            <summary>
+            构建分析器
+            </summary>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.#ctor(Beetle.TcpChannel)">
+            <summary>
+            构建基于信息的分析器
+            </summary>
+            <param name="channel">TcpChannel</param>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.ReadMessageByType(Beetle.BufferReader,System.Object@)">
+            <summary>
+            读取消息类型标记，并返回对应的消息对象
+            </summary>
+            <param name="reader">BufferReader</param>
+            <param name="typeTag">object</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.WriteMessageType(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            写入消息类型标记
+            </summary>
+            <param name="msg">IMessage</param>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.Import(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            导入数据
+            </summary>
+            <param name="data">byte数组</param>
+            <param name="start">写入开始位置</param>
+            <param name="count">写入总长度</param>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.MessageWrite(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            消息写入规则,派生类可以重写实现自己的规则
+            </summary>
+            <param name="msg">消息对象</param>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.MessageRead(Beetle.BufferReader)">
+            <summary>
+            消息读取规则,派生类可以重写实现自己的规则
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.HeadSizeOfPackage.OnDisposed">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:Beetle.EofDataOfPackage">
+            <summary>
+            基于结束符的分析器
+            会在发送消息前写下消息类型名称长度(int),消息类型名称(string)和在消息尾部写结束数据(指定的byte[])
+            可以通过重写MessageWrite和MessageRead来自定义自己需要的规则.
+            </summary>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.#ctor">
+            <summary>
+            构建分析器
+            </summary>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.#ctor(Beetle.TcpChannel)">
+            <summary>
+            构建指定信道的分析器
+            </summary>
+            <param name="channel">TcpChannel</param>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.ReadMessageByType(Beetle.BufferReader,System.Object@)">
+            <summary>
+            获取消息标记，并返回对应的信息对象
+            </summary>
+            <param name="reader">BufferReader</param>
+            <param name="typeTag">typeTag</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.WriteMessageType(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            写放消息类型标记
+            </summary>
+            <param name="msg">IMessage</param>
+            <param name="writer">BufferWriter</param>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.MessageWrite(Beetle.IMessage,Beetle.BufferWriter)">
+            <summary>
+            消息写入方法,用于制定消息写入流的规则
+            </summary>
+            <param name="msg">消息对象</param>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.MessageRead(Beetle.BufferReader)">
+            <summary>
+            获取消息方法
+            </summary>
+            <param name="reader">流读取对象</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.EofDataOfPackage.Import(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            数据导入
+            </summary>
+            <param name="data">byte[]数组</param>
+            <param name="start">开始位置</param>
+            <param name="count">导入长度</param>
+        </member>
+        <member name="P:Beetle.EofDataOfPackage.EofData">
+            <summary>
+            获取分隔符内容,源生类重写
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelDisposedEventArgs">
+            <summary>
+            通道释放对象
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelDisposedEventArgs.#ctor">
+            <summary>
+            构建对象
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelDisposedEventArgs.Delay">
+            <summary>
+            释放资源延时时间,默认是50ms
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelDisposedEventArgs.Message">
+            <summary>
+            还没处理发送的消息
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelDisposedEventArgs.Clean">
+            <summary>
+            是否马上释放资源,默认是True,如果设置False的话会根据Delay的时间来释放资源
+            注意当设置为False的时候，请在组件使用之前调用Beetle.ChannelDisposedQueue.DisposedQueue.Start保证延时回收任务是在工作状态
+            </summary>
+        </member>
+        <member name="T:Beetle.IIPFiler">
+            <summary>
+            IP过虑接口
+            </summary>
+        </member>
+        <member name="M:Beetle.IIPFiler.Execute(System.Net.IPEndPoint)">
+            <summary>
+            执行IP验证
+            </summary>
+            <param name="poing">IPEndPoint</param>
+            <returns>bool是否有效</returns>
+        </member>
+        <member name="T:Beetle.IByteConverterFactory">
+            <summary>
+            byte转换器工厂
+            </summary>
+        </member>
+        <member name="M:Beetle.IByteConverterFactory.Pop">
+            <summary>
+            获取一个byte转换器
+            </summary>
+            <returns>IByteConverter</returns>
+        </member>
+        <member name="M:Beetle.IByteConverterFactory.Init(System.Int32)">
+            <summary>
+            实始化转换器
+            </summary>
+            <param name="count">数量</param>
+        </member>
+        <member name="M:Beetle.IByteConverterFactory.Push(Beetle.IByteConverter)">
+            <summary>
+            回收转换器
+            </summary>
+            <param name="converter">IByteConverter</param>
+        </member>
+        <member name="M:Beetle.IByteConverterFactory.Clear">
+            <summary>
+            清除资源
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelController">
+            <summary>
+            信道处理控制器,主要功能是注册IMessageHandler实现消息自动路由功能.
+            TcpUtil.DefaultController配置一个默认的控制器提供使用
+            </summary>
+            <example>
+            实现一个简单的MessageHandler,在执行ProcessMessage方法后,会配匹消息类型执行相关方法
+            <code>
+               class MessageHandler:Beetle.IMessageHandler
+               {
+                   public void OnGet(Beetle.TcpChannel channel, Get e)
+                   {
+                       Console.WriteLine("{0} Get", channel.EndPoint);
+                       Info info = new Info();
+                       info.Company = Beetle.LICENSE.GetLICENSE().Company;
+                       info.EMail = Beetle.LICENSE.GetLICENSE().EMail;
+                       channel.Send(info);
+                   }
+                   public void OnRegister(Beetle.TcpChannel channel, Register e)
+                   {
+                       Console.WriteLine("{0} Register UserName:{1} EMail:{2}", channel.EndPoint, e.UserName, e.EMail);
+                       channel.Send(e);
+                   }
+                   //消息处理过程,Hadler接管的消息都会经常此方法
+                   public void ProcessMessage(Beetle.TcpChannel adapter, Beetle.MessageHandlerArgs message)
+                   {
+                       //message.Cancel = true; 这里设置true将会取消路由
+                   }
+               }
+            </code>
+            通过ChannelController.RegisterHandler方法注册这个MessageHandler
+            <code>
+                Beetle.ChannelController.RegisterHandler(new MessageHandler());
+            </code>
+            信道接入的时候在设置分析器指定到控制器上
+            <code>
+                e.Channel.SetPackage&lt;HeadSizePackage&gt;(Beetle.TcpUtils.DefaultController);
+                e.Channel.BeginReceive();
+            </code>
+            </example>
+        </member>
+        <member name="M:Beetle.ChannelController.Register(Beetle.Package)">
+            <summary>
+            注册一个分析器
+            </summary>
+            <param name="package">Package</param>
+        </member>
+        <member name="F:Beetle.ChannelController.Receive">
+            <summary>
+            消息接收委托
+            </summary>
+        </member>
+        <member name="M:Beetle.ChannelController.RegisterHandler(Beetle.IMessageHandler)">
+            <summary>
+            注册信息处理器
+            </summary>
+            <param name="handler">IMessageHandler</param>
+        </member>
+        <member name="T:Beetle.ChannelStatus">
+            <summary>
+            信道状态类型
+            </summary>
+        </member>
+        <member name="F:Beetle.ChannelStatus.None">
+            <summary>
+            默认
+            </summary>
+        </member>
+        <member name="F:Beetle.ChannelStatus.Security">
+            <summary>
+            标记为安全
+            </summary>
+        </member>
+        <member name="T:Beetle.TcpUtils">
+            <summary>
+            组件配置初始化信息
+            </summary>
+            <example>
+            Beetle.TcpUtils.Setup(10000, 2, 1);
+            初始化一万个可用连接缓存,2组队列和1个发送,接收,消息调度器
+            </example>
+        </member>
+        <member name="F:Beetle.TcpUtils.DefaultController">
+            <summary>
+            获取或设置信道控制器
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetSendBufferStatus">
+            <summary>
+            获取发送Buffer情况
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Beetle.TcpUtils.BufferReaderPool">
+            <summary>
+            BufferReader池
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ByteConverters">
+            <summary>
+            获取或设置byte转换器工厂
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SocketDespatchSleepTime">
+            <summary>
+            Socket调度器空闲的时候sleep时长，默认是10毫秒
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.WorkDespatchSleepTime">
+            <summary>
+            工作调度器空闲的时候sleep时长，默认是10毫秒
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.Statistics">
+            <summary>
+            是否对信息进行统计，如IO操作数量，接收和发送数据数量等。
+            默认是关闭
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendBytes">
+            <summary>
+            获取当前组件发送数据总长度，以byte为单位
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ReceiveBytes">
+            <summary>
+            获取当前组件接收数据总长度，以byte为单位
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendDataIO">
+            <summary>
+            获取当前组件发送IO操作次数
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ReceiveDataIO">
+            <summary>
+            获取当前组件接收IO操作次数
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.UseReceiveAsyncQueue">
+            <summary>
+            是否开启队列模式接收数据
+            默认是关闭
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ChannelMaxQueueData">
+            <summary>
+            通道最大消息队列限制，默认是0不限制
+            设置些后后，如果通道在队列中等待的数据包数量高于此值时强行关闭通道
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.DataPacketMaxLength">
+            <summary>
+            数据包最大长度，些值会对每个数据包进行限制，
+            当一个消息的长度大于此值的时候会导致处理异常并关闭当前连接
+            默认值是:8204byte
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendPacketSpacing">
+            <summary>
+            发送每个buffer之间是否间隔一段时间，一个消息会根据buffer的大小可能划分到1个或多个buffer
+            默认值是0，不启用；以毫秒为单为些方法是调用sleep
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendMessageSpacing">
+            <summary>
+            发送每个消息之间是否间隔一段时间
+            默认值是0，不启用；以毫秒为单为些方法是调用sleep
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendBufferLength">
+            <summary>
+            一次发送数据缓冲大小
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ReceiveBufferLength">
+            <summary>
+            一次接收数据缓冲大小
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.Connections">
+            <summary>
+            初始化指定数据量的连接缓冲区，每个连接默认是20K
+            在调用Setup方法的时候需要提供
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.StringEncodingLength">
+            <summary>
+            字符编码缓冲大小,只有启动特定字符编码生效
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.UseStringEncoding">
+            <summary>
+            是否启用节省byte[]开销的字符编码，默认是
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.TimeOutms">
+            <summary>
+            连接超时，当连没有接收或发送数据一段时间就判断超时，默认是20秒;
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ExecutionContext">
+            <summary>
+            是否关闭ExecutionContext
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.BufferPoolSize">
+            <summary>
+            设置BufferPool大小，默认每个Pool是1000个buffer
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.ReceiveMessages">
+            <summary>
+            接收消息总数量
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpUtils.SendMessages">
+            <summary>
+            发送消息总数量
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpUtils.Setup(System.String)">
+            <summary>
+            从配置节中加载组件配置信息
+            </summary>
+            <param name="configname">配置名称</param>
+        </member>
+        <member name="M:Beetle.TcpUtils.Setup(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            初始化组件信息
+            </summary>
+            <param name="maxconnections">分配指定数量的连接缓冲</param>
+            <param name="bufferpools">数据缓冲池数量，每个池默认有200个buffer
+            buffer的大小决定于SendBufferLength和ReceiveBufferLength</param>
+            <param name="senddespatchs">设置发送队列数量</param>
+            <param name="receivedespatch">设置接收队列数量</param>
+            <param name="workdespatchs">设置接收队列数量</param>
+        </member>
+        <member name="M:Beetle.TcpUtils.Setup(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            初始化组件信息
+            </summary>
+            <param name="maxconnections">分配指定数量的连接缓冲</param>
+            <param name="bufferpools">数据缓冲池数量，每个池默认有200个buffer
+            buffer的大小决定于SendBufferLength和ReceiveBufferLength</param>
+            <param name="despatchs">接收数据调度器数量</param>
+        </member>
+        <member name="M:Beetle.TcpUtils.Clean">
+            <summary>
+            清除资源，包括停止相关队列工作
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetBufferPoolStatus">
+            <summary>
+            获取数据池状态
+            </summary>
+            <returns>IList'int</returns>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetAsyncEventPoolStatus">
+            <summary>
+            获取剩余的用于进行接收的SocketAsyncEventArgs数量
+            </summary>
+            <returns>int</returns>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetSendDespatchStatus">
+            <summary>
+            获取发送消息队列状态
+            </summary>
+            <returns>IList'int</returns>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetReceiveDespatchStatus">
+            <summary>
+            获取接收消息队列状态
+            </summary>
+            <returns>IList'int</returns>
+        </member>
+        <member name="M:Beetle.TcpUtils.Setup(System.Int32,System.Int32)">
+            <summary>
+            初始化组件状态
+            </summary>
+            <param name="maxonlineconnections">最大同时在线边接数</param>
+            <param name="despatchs">调度器数量</param>
+        </member>
+        <member name="M:Beetle.TcpUtils.Setup(System.Int32)">
+            <summary>
+            初始化
+            </summary>
+            <param name="maxonlineconnections">最大支持连接数</param>
+        </member>
+        <member name="M:Beetle.TcpUtils.GetWorkDespatchsStatus">
+            <summary>
+            获取消息接收队列状态
+            </summary>
+            <returns>IList'int</returns>
+        </member>
+        <member name="T:Beetle.DefaultIPFilter">
+            <summary>
+            默认IP过虑类
+            </summary>
+        </member>
+        <member name="M:Beetle.DefaultIPFilter.Add(Beetle.IpItem)">
+            <summary>
+            添加IP过虑信息
+            </summary>
+            <param name="item">IP信息</param>
+        </member>
+        <member name="M:Beetle.DefaultIPFilter.Remove(System.String,System.Boolean)">
+            <summary>
+            移走指定类型的IP信息
+            </summary>
+            <param name="ipvalue">IP值</param>
+            <param name="permit">是否许可类型</param>
+        </member>
+        <member name="M:Beetle.DefaultIPFilter.Add(System.String,System.Boolean)">
+            <summary>
+            添加IP信息
+            </summary>
+            <param name="ipvalue">IP信息</param>
+            <param name="permit">是否许可类型</param>
+        </member>
+        <member name="M:Beetle.DefaultIPFilter.GetItems">
+            <summary>
+            获取所有IP信息项
+            </summary>
+            <returns>IpItem[]</returns>
+        </member>
+        <member name="M:Beetle.DefaultIPFilter.Execute(System.Net.IPEndPoint)">
+            <summary>
+            对接入的连接进行判断处理
+            </summary>
+            <param name="point">IP信息</param>
+            <returns>bool是否合法</returns>
+        </member>
+        <member name="M:Beetle.ServerBase.Open(System.String,System.Int32)">
+            <summary>
+            在指定的IP端口处开启服务
+            </summary>
+            <param name="ip">IP地址</param>
+            <param name="port">端口</param>
+        </member>
+        <member name="M:Beetle.ServerBase.Open(System.Int32)">
+            <summary>
+            在所有IP的端口处开启服务
+            </summary>
+            <param name="port">端口</param>
+        </member>
+        <member name="M:Beetle.ServerBase.Open(System.Net.IPAddress,System.Int32)">
+            <summary>
+            在指定的IP端口处开启服务
+            </summary>
+            <param name="ip">IP地址</param>
+            <param name="port">端口</param>
+        </member>
+        <member name="M:Beetle.ServerBase.Open(System.Net.IPEndPoint)">
+            <summary>
+            在指定的IP端口处开启服务
+            </summary>
+            <param name="ep">IP端口</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnOpening">
+            <summary>
+            服务打开事件，派生类可重写实现相关应的控制
+            </summary>
+        </member>
+        <member name="M:Beetle.ServerBase.OnBindEvent(Beetle.TcpServer)">
+            <summary>
+            tcp服务绑定事件方法
+            </summary>
+            <param name="server">TcpServer</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnCreatingChannel(System.Object,Beetle.ChannelCreatingArgs)">
+            <summary>
+            连接接入过程
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelCreatingArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnConnected(System.Object,Beetle.ChannelEventArgs)">
+            <summary>
+            创建Channel过程
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelEventArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnReceive(System.Object,Beetle.ChannelReceiveEventArgs)">
+            <summary>
+            数据接处理过程
+            当不启用协议分包对象的时候重写该方法来处理接收的数据
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelReceiveEventArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnDisposed(System.Object,Beetle.ChannelDisposedEventArgs)">
+            <summary>
+            连接释放事件
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelDisposedEventArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase.OnError(System.Object,Beetle.ChannelErrorEventArgs)">
+            <summary>
+            连接错误处理过程
+            </summary>
+            <param name="sender">sender</param>
+            <param name="e">ChannelErrorEventArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase.Dispose">
+            <summary>
+            释放服务端
+            </summary>
+        </member>
+        <member name="P:Beetle.ServerBase.Server">
+            <summary>
+            获取当前服务的TCP服务对象
+            </summary>
+        </member>
+        <member name="T:Beetle.ServerBase`1">
+            <summary>
+            TCP服务基础类
+            </summary>
+            <typeparam name="T">协议分包器</typeparam>
+        </member>
+        <member name="M:Beetle.ServerBase`1.OnConnected(System.Object,Beetle.ChannelEventArgs)">
+            <summary>
+            创建Channel过程
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelEventArgs</param>
+        </member>
+        <member name="M:Beetle.ServerBase`1.OnMessageReceive(Beetle.PacketRecieveMessagerArgs)">
+            <summary>
+            消息接收处理过程
+            </summary>
+            <param name="e">PacketRecieveMessagerArgs</param>
+        </member>
+        <member name="T:Beetle.EventDataReceive">
+            <summary>
+            数据接收事件
+            </summary>
+            <param name="sender">触发对象</param>
+            <param name="e">数据信息</param>
+        </member>
+        <member name="T:Beetle.EventChannelError">
+            <summary>
+            错误处理事件
+            </summary>
+            <param name="sender">触发对象</param>
+            <param name="e">错误信息</param>
+        </member>
+        <member name="T:Beetle.EventChannelDisposed">
+            <summary>
+            信道释放事件
+            </summary>
+            <param name="sender">触发对象</param>
+            <param name="e">信道信息</param>
+        </member>
+        <member name="T:Beetle.EventChannelConnected">
+            <summary>
+            信道接入事件
+            </summary>
+            <param name="sender">触发对象</param>
+            <param name="e">信道信息</param>
+        </member>
+        <member name="T:Beetle.EventChannglCreating">
+            <summary>
+            通道构建时事件
+            </summary>
+            <param name="sender">object</param>
+            <param name="e">ChannelCreatingArgs</param>
+        </member>
+        <member name="T:Beetle.CreateChannelArgs">
+            <summary>
+            创建Client连接回调对象
+            </summary>
+        </member>
+        <member name="F:Beetle.CreateChannelArgs.Channel">
+            <summary>
+            创建成功的通道对象
+            </summary>
+        </member>
+        <member name="F:Beetle.CreateChannelArgs.Error">
+            <summary>
+            对应的SocketError,当为Success的时候创建连接成功
+            </summary>
+        </member>
+        <member name="T:Beetle.CacheMessagecs">
+            <summary>
+            可复用消息基础类
+            </summary>
+        </member>
+        <member name="M:Beetle.CacheMessagecs.Reset">
+            <summary>
+            重置对象
+            </summary>
+        </member>
+        <member name="M:Beetle.CacheMessagecs.Save(Beetle.BufferWriter)">
+            <summary>
+            把对象写入流方法,派生类重写
+            </summary>
+            <param name="writer">流写入对象</param>
+        </member>
+        <member name="M:Beetle.CacheMessagecs.Load(Beetle.BufferReader)">
+            <summary>
+            从流中获取信息,派生类重写
+            </summary>
+            <param name="reader">流读取对象</param>
+        </member>
+        <member name="T:Beetle.TcpSocketAsyncEventArgsPool">
+            <summary>
+            异步操作对象池
+            </summary>
+        </member>
+        <member name="F:Beetle.TcpSocketAsyncEventArgsPool.mQueue">
+            <summary>
+            队列数据
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.#ctor(System.Int32)">
+            <summary>
+            构建对象池
+            </summary>
+            <param name="count">初始化对象数量</param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构建对象池
+            </summary>
+            <param name="count">初始化对象数量</param>
+            <param name="bufferlength">异步操作对象buffer长度</param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.createItem">
+            <summary>
+            创建对象
+            </summary>
+            <returns>TcpSocketAsyncEventArgs</returns>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.Pop">
+            <summary>
+            从池中获取异步处理对象
+            </summary>
+            <returns>TcpSocketAsyncEventArgs</returns>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.Push(Beetle.TcpSocketAsyncEventArgs)">
+            <summary>
+            回收异步对象到池中
+            </summary>
+            <param name="item">异步对象</param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgsPool.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSocketAsyncEventArgsPool.Count">
+            <summary>
+            获取池中对象的数量
+            </summary>
+        </member>
+        <member name="T:Beetle.EventSendMessageCompleted">
+            <summary>
+            消息发送完成事件
+            </summary>
+            <param name="sender">触发事件对象</param>
+            <param name="e">完成事件信息</param>
+        </member>
+        <member name="T:Beetle.TcpSocketAsyncEventArgs">
+            <summary>
+            socket 数据处理异步对象
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.#ctor(System.Int32)">
+            <summary>
+            构建socket异步处理对象
+            </summary>
+            <param name="length">初始化buffer大小</param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.#ctor">
+            <summary>
+            构建socket异步处理对象
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.Reset">
+            <summary>
+            重置对象
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.Enter">
+            <summary>
+            把对象回收到池中
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.OnCompleted(System.Net.Sockets.SocketAsyncEventArgs)">
+            <summary>
+            异步对象操作完成方法
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.IO_ReceiveComplete(Beetle.TcpSocketAsyncEventArgs)">
+            <summary>
+            数据接收完成方法
+            </summary>
+            <param name="e">对应的异步对象</param>
+        </member>
+        <member name="M:Beetle.TcpSocketAsyncEventArgs.IO_SendComplete(Beetle.TcpSocketAsyncEventArgs)">
+            <summary>
+            数据发送完成方法
+            </summary>
+            <param name="e">对应的异步对象</param>
+        </member>
+        <member name="P:Beetle.TcpSocketAsyncEventArgs.Pool">
+            <summary>
+            获取所属对象池
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSocketAsyncEventArgs.Channel">
+            <summary>
+            获取或设置相应的tcp信道
+            </summary>
+        </member>
+        <member name="T:Beetle.TcpSyncChannel`1">
+            <summary>
+            同步Channel对象
+            </summary>
+            <typeparam name="T">协议分析器</typeparam>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.#ctor">
+            <summary>
+            构建TcpClient
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.OnInit">
+            <summary>
+            初始化类
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.OnSend(Beetle.IMessage)">
+            <summary>
+            数据发送过程，派生类重写实现相应发送规则
+            </summary>
+            <param name="data">IMessage</param>
+            <returns>IMessage</returns>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.OnDisposed">
+            <summary>
+            释放Channel，派生类可以重写此方法来处理释放事件
+            </summary>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.Send(System.Object)">
+            <summary>
+            发送一个消息对象并获取对返回对象
+            </summary>
+            <param name="data">发送的对象</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.Connect(System.String,System.Int32)">
+            <summary>
+            连接到指定IP端口的服务
+            </summary>
+            <param name="host">IP地址或域名</param>
+            <param name="port">端口</param>
+        </member>
+        <member name="M:Beetle.TcpSyncChannel`1.Dispose">
+            <summary>
+            释放当前Channel
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.Socket">
+            <summary>
+            获取当前channel的socket对象
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.Properties">
+            <summary>
+            获了当前Channel属性
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.Item(System.String)">
+            <summary>
+            获取或设置信道相关名称的数据信息
+            </summary>
+            <param name="name">名称</param>
+            <returns>object</returns>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.ReceiveTimeout">
+            <summary>
+            接收超时毫秒为单位，默认是10000毫秒
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.Coding">
+            <summary>
+            获取或设置编码
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.IsDisplsed">
+            <summary>
+            获取当前Channel
+            </summary>
+        </member>
+        <member name="P:Beetle.TcpSyncChannel`1.Connected">
+            <summary>
+            判断当前channel是否处于连接状态
+            </summary>
+        </member>
+        <member name="T:Beetle.ChannelErrorEventArgs">
+            <summary>
+            tcp通道错误事件信息对象
+            </summary>
+        </member>
+        <member name="P:Beetle.ChannelErrorEventArgs.Exception">
+            <summary>
+            详细异常信息
+            </summary>
+        </member>
+        <member name="T:Beetle.ByteArrayPool">
+            <summary>
+            大容量byte[]对象池,当发送一个大的byte[]数据时需要,如发送文件块等
+            </summary>
+        </member>
+        <member name="M:Beetle.ByteArrayPool.#ctor(System.Int32,System.Int32)">
+            <summary>
+            构建对象池
+            </summary>
+            <param name="initcount">初始化长度</param>
+            <param name="length">buffer大小</param>
+        </member>
+        <member name="M:Beetle.ByteArrayPool.Pop">
+            <summary>
+            获取ByteArraySegment
+            </summary>
+            <returns>ByteArraySegment</returns>
+        </member>
+        <member name="M:Beetle.ByteArrayPool.Push(Beetle.ByteArraySegment)">
+            <summary>
+            回收ByteArraySegment
+            </summary>
+            <param name="item">ByteArraySegment</param>
+        </member>
+        <member name="P:Beetle.ByteArrayPool.Count">
+            <summary>
+            获取池数量
+            </summary>
+        </member>
+    </members>
+</doc>
